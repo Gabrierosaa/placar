@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Placar de Beijos</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap');
+
+        /* Reset geral */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Orbitron', sans-serif;
+            background: linear-gradient(135deg, #1a1a1a, #2a2a2a);
+            color: #ff4444;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+            padding: 0 20px;
+        }
+
+        .scoreboard {
+            background: rgba(30, 30, 30, 0.8);
+            border-radius: 20px;
+            padding: 40px;
+            width: 100%;
+            max-width: 600px;
+            text-align: center;
+            box-shadow: 0 0 25px rgba(255, 0, 0, 0.7);
+            border: 3px solid #ff4444;
+            position: relative;
+        }
+
+        .title {
+            font-size: 6vw;
+            color: #ff0000;
+            font-weight: bold;
+            margin-bottom: 20px;
+            text-shadow: 0 0 10px rgba(255, 0, 0, 0.8);
+            text-transform: uppercase;
+        }
+
+        .score-container {
+            font-size: 10vw;
+            font-weight: bold;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .winner {
+            font-size: 5vw;
+            color: #ff4444;
+            margin-top: 20px;
+            font-weight: bold;
+            text-shadow: 0 0 15px rgba(255, 0, 0, 0.8);
+            transition: all 0.3s ease;
+        }
+
+        .glow {
+            animation: glow 1.5s infinite alternate;
+        }
+
+        @keyframes glow {
+            from {
+                text-shadow: 0 0 8px rgba(255, 0, 0, 0.6);
+            }
+            to {
+                text-shadow: 0 0 25px rgba(255, 0, 0, 1);
+            }
+        }
+
+        /* Responsividade para telas maiores como 1920x1080 */
+        @media (min-width: 1024px) {
+            .scoreboard {
+                padding: 50px;
+                max-width: 800px;
+            }
+
+            .title {
+                font-size: 5vw;
+            }
+
+            .score-container {
+                font-size: 8vw;
+            }
+
+            .winner {
+                font-size: 4vw;
+            }
+        }
+
+        /* Responsividade para tablets e laptops (como iPad ou laptops) */
+        @media (max-width: 1024px) {
+            .scoreboard {
+                padding: 40px;
+            }
+
+            .title {
+                font-size: 8vw;
+            }
+
+            .score-container {
+                font-size: 12vw;
+            }
+
+            .winner {
+                font-size: 6vw;
+            }
+        }
+
+        /* Responsividade para telas móveis (iPhone X/11) */
+        @media (max-width: 480px) {
+            body {
+                padding: 10px;
+            }
+
+            .scoreboard {
+                padding: 20px;
+            }
+
+            .title {
+                font-size: 12vw;
+            }
+
+            .score-container {
+                font-size: 18vw;
+            }
+
+            .winner {
+                font-size: 8vw;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="scoreboard">
+        <div class="title">Placar</div>
+        <div class="score-container">
+            <span id="layScore">0</span> X <span id="gabrielScore">0</span>
+        </div>
+        <div class="winner glow" id="winnerText"></div>
+    </div>
+
+    <script>
+        // Função para animar os scores
+        function animateScore(elementId, targetScore, callback) {
+            let count = 0;
+            let interval = setInterval(() => {
+                document.getElementById(elementId).textContent = count;
+                if (count >= targetScore) {
+                    clearInterval(interval);
+                    if (callback) callback();
+                }
+                count++;
+            }, 50);
+        }
+
+        window.onload = function() {
+            animateScore("layScore", 5, checkWinner);
+            animateScore("gabrielScore", 15, checkWinner);
+        };
+
+        // Função para verificar o vencedor
+        function checkWinner() {
+            let layScore = parseInt(document.getElementById("layScore").textContent);
+            let gabrielScore = parseInt(document.getElementById("gabrielScore").textContent);
+            let winnerText = document.getElementById("winnerText");
+
+            if (gabrielScore > layScore) {
+                winnerText.textContent = "🔥 Gabriel Perfeito é o vencedor! 🔥";
+            } else if (layScore > gabrielScore) {
+                winnerText.textContent = "🔥 Lay Fedida é a vencedora! 🔥";
+            } else {
+                winnerText.textContent = "Empate!";
+            }
+        }
+    </script>
+
+</body>
+</html>
